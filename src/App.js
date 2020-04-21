@@ -1,11 +1,20 @@
-import React, { Component } from 'react'
+import React from "react";
+import "./App.css";
+import Header from "./components/header";
+import Boards from "./components/boards";
+import Home from "./components/Home";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        Hey before start the work for trello project, i made a directory structure for the project.
-      </div>
-    )
-  }
+function App() {
+  return (
+    <Router>
+      <React.Fragment>
+        <Header />
+        <Route path="/" exact component={Home} />
+        <Route path="/boards" exact component={Boards} />
+      </React.Fragment>
+    </Router>
+  );
 }
+
+export default App;
