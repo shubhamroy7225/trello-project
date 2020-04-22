@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import List from './List';
+import Form from './Form';
 const token =
   '587069056c3279db10d87edbc6c0064045e19a535180a020a4d37c65eb9f0803';
 const key = 'ec2e426a10bafa63878b9591f8b93a00';
-
 
 class Lists extends Component {
   state = {
@@ -102,7 +102,14 @@ class Lists extends Component {
           style={{ display: closeaddButton }}>
           +Add List
         </button>
-
+        <Form
+          style={{ display: openHideDiv }}
+          closeInputDiv={this.closeInputDiv}
+          inputState={this.inputState}
+          input={this.state.inputValue}
+          addNewCard={this.addNewList}
+          buttonTitle='list'
+        />
       </div>
     );
   }

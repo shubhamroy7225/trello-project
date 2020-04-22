@@ -1,0 +1,6 @@
+#fatrsh{
+    visibility: hidden;
+}
+#deletebutton:hover #fatrsh{   
+    visibility: visible;
+}

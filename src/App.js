@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import Header from './components/header';
-import Boards from './components/boards';
-import Home from './components/Home';
-import Lists from './components/Lists';
+import Header from './Components/header';
+import Boards from './Components/boards';
+import Home from './Components/Home';
+import Lists from './Components/Lists';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 function App() {
