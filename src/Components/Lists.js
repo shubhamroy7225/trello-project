@@ -1,16 +1,18 @@
-import React, { Component } from 'react';
-import List from './List';
-import Form from './Form';
+import React, { Component } from "react";
+import List from "./List";
+import Form from "./Form";
+import Modal from "./Modal";
 const token =
-  '587069056c3279db10d87edbc6c0064045e19a535180a020a4d37c65eb9f0803';
-const key = 'ec2e426a10bafa63878b9591f8b93a00';
+  "587069056c3279db10d87edbc6c0064045e19a535180a020a4d37c65eb9f0803";
+const key = "ec2e426a10bafa63878b9591f8b93a00";
 
 class Lists extends Component {
   state = {
     lists: [],
     hideDiv: false,
-    inputValue: '',
-    card: {}
+    inputValue: "",
+    open: false,
+    card: {},
   };
   componentDidMount() {
     //console.log('helee');
@@ -18,88 +20,98 @@ class Lists extends Component {
       //get all lists
       `https://api.trello.com/1/boards/${this.props.match.params.id}/lists?key=${key}&token=${token}`,
       {
-        method: 'GET'
+        method: "GET",
       }
     )
-      .then(data => data.json())
-      .then(data => {
+      .then((data) => data.json())
+      .then((data) => {
         // console.log(data);
         this.setState({
-          lists: data
+          lists: data,
         });
       });
   }
   openHideDiv = () => {
     this.setState({
-      hideDiv: true
+      hideDiv: true,
     });
   };
   closeInputDiv = () => {
     this.setState({
-      hideDiv: false
+      hideDiv: false,
     });
   };
-  inputState = event => {
+  inputState = (event) => {
     this.setState({
-      inputValue: event.target.value
+      inputValue: event.target.value,
     });
   };
   addNewList = () => {
     fetch(
       `https://api.trello.com/1/lists?name=${this.state.inputValue}&idBoard=${this.props.match.params.id}&pos=bottom&key=${key}&token=${token}`,
       {
-        method: 'POST'
+        method: "POST",
       }
     )
-      .then(data => data.json())
-      .then(data => {
+      .then((data) => data.json())
+      .then((data) => {
         this.setState({
           lists: this.state.lists.concat([data]),
-          inputValue: ''
+          inputValue: "",
         });
       });
   };
 
-  deleteList = id => {
+  deleteList = (id) => {
     fetch(
       `https://api.trello.com/1/lists/${id}/closed?value=true&key=${key}&token=${token}`,
       {
-        method: 'PUT'
+        method: "PUT",
       }
     ).then(() => {
-      this.setState({ lists: this.state.lists.filter(list => list.id !== id) });
+      this.setState({
+        lists: this.state.lists.filter((list) => list.id !== id),
+      });
     });
   };
-  
+  //use for open check list modal
+  openModal = (cardObj) => {
+    this.setState({
+      open: true,
+      card: cardObj,
+    });
+  };
+
   onCloseModal = () => {
     this.setState({
-      open: false
+      open: false,
     });
   };
   render() {
     //console.log(this.state.checkLists);
-    var closeaddButton = this.state.hideDiv ? 'none' : 'block';
-    var openHideDiv = this.state.hideDiv ? 'block' : 'none';
-    var allLists = this.state.lists.map(list => {
+    var closeaddButton = this.state.hideDiv ? "none" : "block";
+    var openHideDiv = this.state.hideDiv ? "block" : "none";
+    var allLists = this.state.lists.map((list) => {
       return (
         <List
           key={list.id}
           lists={list}
           deleteList={this.deleteList}
+          openModal={this.openModal}
         />
       );
     });
     return (
-      //   <div>
       <div
-        style={{ display: 'flex', justifyContent: 'space-between' }}
-        className='allLists'>
+        style={{ display: "flex", justifyContent: "space-between" }}
+        className="allLists"
+      >
         {allLists}
-        {/* </div> */}
         <button
           onClick={this.openHideDiv}
-          className='newListButton'
-          style={{ display: closeaddButton }}>
+          className="newListButton"
+          style={{ display: closeaddButton }}
+        >
           +Add List
         </button>
         <Form
@@ -108,10 +120,16 @@ class Lists extends Component {
           inputState={this.inputState}
           input={this.state.inputValue}
           addNewCard={this.addNewList}
-          buttonTitle='list'
+          buttonTitle="list"
+        />
+        <Modal
+          openModal={this.state.open}
+          closeModal={this.onCloseModal}
+          card={this.state.card}
         />
       </div>
     );
   }
 }
+
 export default Lists;
