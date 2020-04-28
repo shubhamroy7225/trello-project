@@ -10,6 +10,7 @@ class List extends Component {
     cards: [],
     hideDiv: false,
     inputValue: "",
+    Name:""
   };
   componentDidMount() {
     fetch(
@@ -69,8 +70,21 @@ class List extends Component {
       });
     });
   };
+
+  update1=(id,event)=>{
+    const newname1=(event.target.parentNode.firstChild.value)
+    console.log(newname1);
+    fetch(`https://api.trello.com/1/cards/${id}?key=${key}&token=${token}`,{
+      method:'PUT'
+    }).then((e)=>{
+   this.setState({
+     Name:newname1
+  })
+   } ).then(e=>{
+       console.log('done'+this.state.Name)
+   })
+  }
   render() {
-    //console.log(this.state.inputValue);
     var closeaddButton = this.state.hideDiv ? "none" : "block";
     var openHideDiv = this.state.hideDiv ? "block" : "none";
     var allCards = this.state.cards.map((card) => {
@@ -79,8 +93,9 @@ class List extends Component {
           key={card.id}
           cards={card}
           deleteCard={this.deleteCard}
+          updateCard={this.update1}
           openModal={this.props.openModal}
-        />
+      />
       );
     });
     return (

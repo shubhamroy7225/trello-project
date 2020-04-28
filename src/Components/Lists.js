@@ -74,7 +74,6 @@ class Lists extends Component {
       });
     });
   };
-  //use for open check list modal
   openModal = (cardObj) => {
     this.setState({
       open: true,

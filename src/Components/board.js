@@ -7,6 +7,7 @@ const Board = props => {
         <button className='boardB btn btn-primary active'>
           {props.boards.name}
         </button>
+
       </Link>
     </div>
   );
