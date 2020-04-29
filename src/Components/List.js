@@ -43,8 +43,6 @@ class List extends Component {
     });
   };
   addNewCard = async () => {
-    //console.log(this.props.lists.id);
-
     await fetch(
       `https://api.trello.com/1/cards?idList=${this.props.lists.id}&name=${this.state.inputValue}&keepFromSource=all&key=${key}&token=${token}`,
       {

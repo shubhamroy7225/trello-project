@@ -1,24 +1,24 @@
-import React from 'react';
+import React from "react";
 
 class Form extends React.Component {
   state = {};
   render() {
     return (
-      <div className='hideDiv' style={{ display: this.props.style.display }}>
-        <div className='hideInputDiv'>
+      <div className="hideDiv" style={{ display: this.props.style.display }}>
+        <div className="hideInputDiv">
           <input
             onChange={this.props.inputState}
-            className='input'
-            type='text'
+            className="input"
+            type="text"
             value={this.props.input}
-            placeholder='enter title'
+            placeholder="enter title"
           />
         </div>
-        <div className='hideButtons'>
-          <button onClick={this.props.addNewCard} className='hideButton'>
+        <div className="hideButtons">
+          <button onClick={this.props.addNewBord} className="hideButton">
             {`Add ${this.props.buttonTitle}`}
           </button>
-          <button onClick={this.props.closeInputDiv} className='hideButton1'>
+          <button onClick={this.props.closeInputDiv} className="hideButton1">
             X
           </button>
         </div>

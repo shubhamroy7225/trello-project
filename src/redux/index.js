@@ -1,1 +1,1 @@
-export {getBoards} from "./boards/boardActions.js"
+export {getBoards,addNewBords} from "./boards/boardActions.js"
