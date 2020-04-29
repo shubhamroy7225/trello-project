@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getBoards, addNewBords } from "../redux";
+import { getBoards, addNewBoards, deleteBoards } from "../redux";
 import Board from "./board";
 import Form from "./Form";
 const token =
@@ -41,7 +41,7 @@ class Boards extends React.Component {
     });
   };
 
-  addNewBord = async () => {
+  addNewBoards = async () => {
     await fetch(
       `https://api.trello.com/1/boards?name=${this.state.inputValue}&keepFromSource=all&key=${key}&token=${token}`,
       {
@@ -50,15 +50,30 @@ class Boards extends React.Component {
     )
       .then((data) => data.json())
       .then((data) => {
-        this.props.addNewBord(data);
+        this.props.addNewBoards(data);
+        this.setState({
+          inputValue: "",
+        });
       });
+  };
+
+  deleteBoard = (event, id) => {
+    event.stopPropagation();
+    fetch(`https://api.trello.com/1/boards/${id}?key=${key}&token=${token}`, {
+      method: "DELETE",
+    }).then(() => {
+      console.log(id);
+      this.props.deleteBoards(id);
+    });
   };
 
   render() {
     var closeaddButton = this.state.hideDiv ? "none" : "block";
     var openHideDiv = this.state.hideDiv ? "block" : "none";
     var allBoards = this.props.boards.map((board) => {
-      return <Board key={board.id} boards={board} />;
+      return (
+        <Board key={board.id} boards={board} deleteBoards={this.deleteBoard} />
+      );
     });
     return (
       <div>
@@ -99,7 +114,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getBoards: (data) => dispatch(getBoards(data)),
-    addNewBords: (data) => dispatch(addNewBords(data)),
+    addNewBoards: (data) => dispatch(addNewBoards(data)),
+    deleteBoards: (id) => dispatch(deleteBoards(id)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Boards);
