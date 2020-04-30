@@ -100,7 +100,7 @@ class Boards extends React.Component {
           closeInputDiv={this.closeInputDiv}
           inputState={this.inputState}
           input={this.state.inputValue}
-          addNewBoards={this.addNewBoard}
+          addNewCard={this.addNewBoard}
           buttonTitle="board"
         />
       </div>
