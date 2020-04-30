@@ -15,7 +15,7 @@ class Form extends React.Component {
           />
         </div>
         <div className="hideButtons">
-          <button onClick={this.props.addNewBord} className="hideButton">
+          <button onClick={this.props.addNewBoards} className="hideButton">
             {`Add ${this.props.buttonTitle}`}
           </button>
           <button onClick={this.props.closeInputDiv} className="hideButton1">

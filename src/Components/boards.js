@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getBoards, addNewBoards, deleteBoards } from "../redux";
+import { getBoards, addNewBoards, deleteBoards} from "../redux";
 import Board from "./board";
 import Form from "./Form";
 const token =
@@ -41,7 +41,7 @@ class Boards extends React.Component {
     });
   };
 
-  addNewBoards = async () => {
+  addNewBoard = async () => {
     await fetch(
       `https://api.trello.com/1/boards?name=${this.state.inputValue}&keepFromSource=all&key=${key}&token=${token}`,
       {
@@ -52,20 +52,22 @@ class Boards extends React.Component {
       .then((data) => {
         this.props.addNewBoards(data);
         this.setState({
-          inputValue: "",
-        });
+          inputValue:''
+        })
       });
   };
 
   deleteBoard = (event, id) => {
     event.stopPropagation();
-    fetch(`https://api.trello.com/1/boards/${id}?key=${key}&token=${token}`, {
+    fetch(`https://api.trello.com/1/boards/${id}?name=${this.state.inputValue}&key=${key}&token=${token}`, {
       method: "DELETE",
     }).then(() => {
       console.log(id);
       this.props.deleteBoards(id);
     });
   };
+
+  
 
   render() {
     var closeaddButton = this.state.hideDiv ? "none" : "block";
@@ -98,7 +100,7 @@ class Boards extends React.Component {
           closeInputDiv={this.closeInputDiv}
           inputState={this.inputState}
           input={this.state.inputValue}
-          addNewBord={this.props.addNewBord}
+          addNewBoards={this.addNewBoard}
           buttonTitle="board"
         />
       </div>

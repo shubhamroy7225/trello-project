@@ -11,7 +11,6 @@ const Board = (props) => {
         </button>
         <button
           onClick={(event) => {
-            console.log("i am testing");
             event.preventDefault();
             props.deleteBoards(event, props.boards.id);
           }}

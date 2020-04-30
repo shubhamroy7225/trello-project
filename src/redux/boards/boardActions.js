@@ -1,4 +1,4 @@
-import { FETCH_BOARDS, ADD_NEW_BOARDS, DELETE_BOARDS } from "./boardTypes";
+import { FETCH_BOARDS, ADD_NEW_BOARDS, DELETE_BOARDS} from "./boardTypes";
 export const getBoards = (data) => {
   return {
     type: FETCH_BOARDS,
